@@ -39,7 +39,8 @@ TEST(TVector, copied_vector_has_its_own_memory)
 {
 	TVector<int> v(10);
 	TVector<int> v1(v);
-	EXPECT_NE(&v, &v1);
+	v[0] = 1;
+	EXPECT_NE(1, v1[0]);
 }
 
 TEST(TVector, can_get_size)
@@ -75,8 +76,11 @@ TEST(TVector, throws_when_set_element_with_too_large_index)
 
 TEST(TVector, can_assign_vector_to_itself)
 {
-	TVector<int> v(10);
-	ASSERT_NO_THROW(v = v);
+	TVector<int> v(10), v1(10);
+	v[5] = 5;
+	v1 = v;
+	v = v;
+	EXPECT_EQ(v, v1);
 }
 
 TEST(TVector, can_assign_vectors_of_equal_size)
